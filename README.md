@@ -209,7 +209,7 @@ Em cenários com empates, a função DENSE_RANK() pode ser utilizada.
 ### 1. Clonar o Repositório
 
 ```bash
-git clone <url-do-repositorio>
+git clone
 ```
 
 ### 2. Instalar Dependências
