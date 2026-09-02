@@ -1,57 +1,62 @@
-import psycopg2
-from dotenv import load_dotenv
-import os
+from config import get_connect_dw
 
-load_dotenv("variaveis.env")
+def extract_produtos():
 
-conn_dw = psycopg2.connect(
-    host=os.getenv("host"),
-    port=os.getenv("port"),
-    database=os.getenv("database2"),
-    user=os.getenv("user"),
-    password=os.getenv("password")
-)
+    conn = get_connect_dw()
+    
+    cursor = conn.cursor()
 
-cursor_dw = conn_dw.cursor()
-
-cursor_dw.execute(
-    """
-        SELECT
-            id_produto,
-            UPPER(nome_produto) AS nome_produto,
-            UPPER(marca) AS marca,
-            valor
-        FROM
-            raw.produtos
-    """
-)
-
-produtos = cursor_dw.fetchall()
-
-print('Consulta realizada, mostrando dados retornados:')
-
-for dados in produtos:
-    print(dados)
-
-print('Iniciando carga...')
-
-for dados in produtos:
-    cursor_dw.execute(
+    cursor.execute(
         """
-            INSERT INTO staging.produtos(
-            id_produto,
-            nome_produto,
-            marca,
-            valor
-            ) VALUES (
-                %s,
-                %s,
-                %s,
-                %s
-            )
-        """, dados
+            SELECT
+                id_produto,
+                UPPER(nome_produto) AS nome_produto,
+                UPPER(marca) AS marca,
+                valor
+            FROM
+                raw.produtos
+        """
     )
 
-conn_dw.commit()
+    produtos = cursor.fetchall()
 
-print('Carga efetuada com sucesso!')
+    cursor.close()
+
+    conn.close()
+
+    return produtos
+
+def load_produtos(produtos):
+
+    conn = get_connect_dw()
+
+    cursor = conn.cursor()
+
+    for dados in produtos:
+        cursor.execute(
+            """
+                INSERT INTO staging.produtos(
+                id_produto,
+                nome_produto,
+                marca,
+                valor
+                ) VALUES (
+                    %s,
+                    %s,
+                    %s,
+                    %s
+                )
+            """, dados
+        )
+
+    conn.commit()
+
+    cursor.close()
+
+    conn.close()
+
+def pipeline_raw_staging_produtos():
+
+    produtos = extract_produtos()
+
+    load_produtos(produtos)

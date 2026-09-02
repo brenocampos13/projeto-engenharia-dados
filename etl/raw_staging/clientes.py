@@ -7,11 +7,11 @@ load_dotenv("variaveis.env")
 
 def extract_clientes():
 
-    conn_dw = get_connect_dw()
+    conn = get_connect_dw()
 
-    cursor_dw = conn_dw.cursor()
+    cursor = conn.cursor()
 
-    cursor_dw.execute(
+    cursor.execute(
         """
             SELECT
                 id_cliente,
@@ -28,11 +28,11 @@ def extract_clientes():
         """
     )
 
-    clientes = cursor_dw.fetchall()
+    clientes = cursor.fetchall()
 
-    cursor_dw.close()
+    cursor.close()
 
-    conn_dw.close()
+    conn.close()
 
     return clientes
 
@@ -40,10 +40,10 @@ def load_clientes(clientes):
 
     conn = get_connect_dw()
 
-    cursor_dw = conn.cursor()
+    cursor = conn.cursor()
 
     for dados in clientes:
-        cursor_dw.execute(
+        cursor.execute(
             """
                 INSERT INTO staging.clientes(
                     id_cliente,
@@ -70,6 +70,9 @@ def load_clientes(clientes):
         )
 
     conn.commit()
+
+    cursor.close()
+
     conn.close()
 
 def pipeline_raw_staging_clientes():

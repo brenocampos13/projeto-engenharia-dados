@@ -1,51 +1,61 @@
 import psycopg2
 from dotenv import load_dotenv
+from config import get_connect_dw
 import os
 
 load_dotenv("variaveis.env")
 
-conn_dw = psycopg2.connect(
-    host=os.getenv("host"),
-    port=os.getenv("port"),
-    database=os.getenv("database2"),
-    user=os.getenv("user"),
-    password=os.getenv("password")
-)
+def extract_origens():
 
-cursor_dw = conn_dw.cursor()
+    conn = get_connect_dw()
 
-cursor_dw.execute(
-    """
-        SELECT
-            id_origem,
-            UPPER(origem) AS origem
-        FROM
-            raw.origens
-    """
-)
+    cursor = conn.cursor()
 
-origens = cursor_dw.fetchall()
-
-print('Consulta realizada, mostrando dados retornados:')
-
-for dados in origens:
-    print(dados)
-
-print('Iniciando carga...')
-
-for dados in origens:
-    cursor_dw.execute(
+    cursor.execute(
         """
-            INSERT INTO staging.origens(
-            id_origem,
-            origem
-            ) VALUES (
-                %s,
-                %s
-            )
-        """, dados
+            SELECT
+                id_origem,
+                UPPER(origem) AS origem
+            FROM
+                raw.origens
+        """
     )
 
-conn_dw.commit()
+    origens = cursor.fetchall()
 
-print('Carga efetuada com sucesso!')
+    cursor.close()
+
+    conn.close()
+
+    return origens
+
+def load_origens(origens):
+
+    conn = get_connect_dw()
+
+    cursor = conn.cursor()
+
+    for dados in origens:
+        cursor.execute(
+            """
+                INSERT INTO staging.origens(
+                id_origem,
+                origem
+                ) VALUES (
+                    %s,
+                    %s
+                )
+            """, dados
+        )
+
+    conn.commit()
+
+    cursor.close()
+
+    conn.close()
+
+def pipeline_raw_staging_origens():
+
+    origens = extract_origens()
+
+    load_origens(origens)

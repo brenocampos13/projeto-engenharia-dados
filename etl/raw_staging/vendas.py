@@ -1,66 +1,72 @@
 import psycopg2
 from dotenv import load_dotenv
+from config import get_connect_dw
 import os
 
 load_dotenv("variaveis.env")
 
-conn_dw = psycopg2.connect(
-    host=os.getenv("host"),
-    port=os.getenv("port"),
-    database=os.getenv("database2"),
-    user=os.getenv("user"),
-    password=os.getenv("password")
-)
+def extract_vendas():
 
-cursor_dw = conn_dw.cursor()
+    conn = get_connect_dw()
 
-cursor_dw.execute(
-    """
-        SELECT
-            id_venda,
-            id_clinica,
-            id_cliente,
-            id_produto,
-            quantidade,
-            valor_pago,
-            data_venda
-        FROM
-            raw.vendas
-    """
-)
+    cursor = conn.cursor()
 
-vendas = cursor_dw.fetchall()
-
-print('Consulta realizada, mostrando dados retornados:')
-
-for dados in vendas:
-    print(dados)
-
-print('Iniciando carga...')
-
-for dados in vendas:
-    cursor_dw.execute(
+    cursor.execute(
         """
-            INSERT INTO staging.vendas(
-            id_venda,
-            id_clinica,
-            id_cliente,
-            id_produto,
-            quantidade,
-            valor_pago,
-            data_venda
-            ) VALUES (
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s
-            )
-        """, dados
+            SELECT
+                id_venda,
+                id_clinica,
+                id_cliente,
+                id_produto,
+                quantidade,
+                valor_pago,
+                data_venda
+            FROM
+                raw.vendas
+        """
     )
 
-conn_dw.commit()
+    vendas = cursor.fetchall()
 
-print('Carga efetuada com sucesso!')
+    return vendas
+
+def load_vendas(vendas):
+
+    conn = get_connect_dw()
+
+    cursor = conn.cursor()
+
+    for dados in vendas:
+        cursor.execute(
+            """
+                INSERT INTO staging.vendas(
+                id_venda,
+                id_clinica,
+                id_cliente,
+                id_produto,
+                quantidade,
+                valor_pago,
+                data_venda
+                ) VALUES (
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s
+                )
+            """, dados
+        )
+
+    conn.commit()
+
+    cursor.close()
+
+    conn.close()
+
+def pipeline_raw_staging_vendas():
+
+    vendas = extract_vendas()
+
+    load_vendas(vendas)
