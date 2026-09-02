@@ -209,7 +209,7 @@ Em cenários com empates, a função DENSE_RANK() pode ser utilizada.
 ### 1. Clonar o Repositório
 
 ```bash
-git clone
+git clone https://github.com/brenocampos13/projeto-engenharia-dados.git
 ```
 
 ### 2. Instalar Dependências
