@@ -4,7 +4,21 @@
 
 Este projeto foi desenvolvido com o objetivo de praticar conceitos fundamentais de Engenharia de Dados, incluindo modelagem de dados, construção de pipelines ETL, organização em camadas analíticas e consultas SQL para análise de negócio.
 
-O projeto simula um ambiente de dados utilizando PostgreSQL como banco de dados e Python para a construção dos processos ETL.
+O projeto simula um ambiente de dados utilizando PostgreSQL como banco de dados e Python para o desenvolvimento dos processos ETL.
+
+---
+
+## Objetivos
+
+Durante o desenvolvimento deste projeto foram praticados conceitos como:
+
+- Modelagem de Dados
+- SQL para Analytics
+- Desenvolvimento de ETLs com Python
+- Arquitetura de Data Warehouse
+- Organização em camadas (OLTP, RAW, STAGING e ANALYTICS)
+- Modularização de código
+- Versionamento com Git e GitHub
 
 ---
 
@@ -44,11 +58,22 @@ Camada analítica utilizada para consultas e geração de indicadores de negóci
 
 ## Tecnologias Utilizadas
 
+### Banco de Dados
+
 - PostgreSQL
+
+### Linguagens
+
 - SQL
 - Python
-- Psycopg2
-- Python Dotenv
+
+### Bibliotecas
+
+- psycopg2
+- python-dotenv
+
+### Ferramentas
+
 - Git
 - GitHub
 
@@ -65,9 +90,26 @@ Projeto Engenharia de Dados
 │   └── modelagem.md
 │
 ├── etl
-│   ├── ETL_OLTP_RAW
-│   ├── ETL_RAW_STAGING
-│   └── ETL_STAGING_ANALYTICS
+│   ├── oltp_raw
+│   │   ├── clientes.py
+│   │   ├── clinicas.py
+│   │   ├── origens.py
+│   │   ├── produtos.py
+│   │   └── vendas.py
+│   │
+│   ├── raw_staging
+│   │   ├── clientes.py
+│   │   ├── clinicas.py
+│   │   ├── origens.py
+│   │   ├── produtos.py
+│   │   └── vendas.py
+│   │
+│   └── staging_analytics
+│       ├── clientes.py
+│       ├── clinicas.py
+│       ├── origens.py
+│       ├── produtos.py
+│       └── vendas.py
 │
 ├── sql
 │   ├── ddl_oltp.sql
@@ -76,11 +118,36 @@ Projeto Engenharia de Dados
 │   ├── ddl_analytics.sql
 │   └── consultas.sql
 │
-├── .gitignore
-├── README.md
+├── config.py
+├── main.py
 ├── requirements.txt
-├── variaveis.env
-└── variaveis.env.example
+├── variaveis.env.example
+├── README.md
+└── .gitignore
+```
+
+---
+
+## Organização dos ETLs
+
+Cada pipeline foi estruturado seguindo o padrão:
+
+- extract()
+- load()
+- pipeline()
+
+O arquivo `main.py` atua como ponto central de execução, responsável por orquestrar todas as etapas do pipeline.
+
+### Fluxo de Execução
+
+```text
+main.py
+│
+├── OLTP → RAW
+│
+├── RAW → STAGING
+│
+└── STAGING → ANALYTICS
 ```
 
 ---
@@ -146,6 +213,7 @@ Utilizando:
 
 ```sql
 EXTRACT(YEAR FROM data_venda)
+
 EXTRACT(MONTH FROM data_venda)
 ```
 
@@ -153,9 +221,7 @@ EXTRACT(MONTH FROM data_venda)
 
 ## Validação das Camadas
 
-Foi realizada validação da quantidade de registros entre as camadas para garantir integridade dos dados.
-
-Resultado:
+Foi realizada validação da quantidade de registros entre as camadas para garantir a integridade dos dados.
 
 | Camada    | Registros |
 | --------- | --------: |
@@ -177,17 +243,13 @@ Utilizando:
 - Window Functions
 - OVER()
 
----
-
 ### 2. Crescimento Mês contra Mês
 
 Utilizando:
 
 - LAG()
 - CTEs
-- Cálculo percentual
-
----
+- Cálculo Percentual
 
 ### 3. Produto Campeão de Faturamento por Mês
 
@@ -235,11 +297,12 @@ variaveis.env.example
 Exemplo:
 
 ```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=loja_dw
-DB_USER=postgres
-DB_PASSWORD=senha
+HOST=localhost
+PORT=5432
+DATABASE=loja_oltp
+DATABASE2=loja_dw
+USER=postgres
+PASSWORD=senha
 ```
 
 ### 4. Executar os Scripts SQL
@@ -253,17 +316,27 @@ ddl_staging.sql
 ddl_analytics.sql
 ```
 
-### 5. Executar os ETLs
+### 5. Executar o Pipeline
 
-Executar os scripts seguindo a ordem:
-
-```text
-ETL_OLTP_RAW
-↓
-ETL_RAW_STAGING
-↓
-ETL_STAGING_ANALYTICS
+```bash
+python main.py
 ```
+
+---
+
+## Aprendizados
+
+Durante o desenvolvimento deste projeto foram praticados conceitos como:
+
+- Arquitetura de Data Warehouse
+- Modelagem OLTP e Analítica
+- Desenvolvimento de ETLs em Python
+- SQL Analítico
+- Window Functions
+- Modularização de Código
+- Organização de Projetos de Dados
+- Versionamento com Git
+- Documentação Técnica
 
 ---
 
@@ -272,14 +345,16 @@ ETL_STAGING_ANALYTICS
 Melhorias planejadas para futuras versões:
 
 - Docker
-- Airflow
 - dbt
-- Testes automatizados
+- Apache Airflow
 - Data Quality Checks
-- Integração com Cloud
+- Integração com AWS S3
+- Testes Automatizados
 
 ---
 
 ## Autor
 
-Projeto desenvolvido por Breno Campos Franco como parte da formação prática em Engenharia de Dados.
+**Breno Campos Franco**
+
+Projeto desenvolvido como parte da formação prática em Engenharia de Dados, com foco na construção de pipelines ETL, modelagem de dados e arquitetura de Data Warehouse.
