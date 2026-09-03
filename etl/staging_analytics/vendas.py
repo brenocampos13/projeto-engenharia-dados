@@ -1,49 +1,21 @@
-import psycopg2
-from dotenv import load_dotenv
-import os
+from config import get_connect_dw
 
-load_dotenv("variaveis.env")
+def extract_vendas():
 
-conn_dw = psycopg2.connect(
-    host=os.getenv("host"),
-    port=os.getenv("port"),
-    database=os.getenv("database2"),
-    user=os.getenv("user"),
-    password=os.getenv("password")
-)
+    conn = get_connect_dw()
 
-cursor = conn_dw.cursor()
+    cursor = conn.cursor()
 
-cursor.execute(
-    """
-        TRUNCATE TABLE
-            analytics.vendas
-    """
-)
-
-cursor.execute(
-    """
-        SELECT
-            id_venda,
-            id_clinica,
-            id_cliente,
-            id_produto,
-            quantidade,
-            valor_pago,
-            data_venda,
-            EXTRACT(YEAR FROM data_venda) AS ano_venda,
-            EXTRACT(MONTH FROM data_venda) AS mes_venda
-        FROM
-            staging.vendas
-    """
-)
-
-clientes = cursor.fetchall()
-
-for linhas in clientes:
     cursor.execute(
         """
-            INSERT INTO analytics.vendas(
+            TRUNCATE TABLE
+                analytics.vendas
+        """
+    )
+
+    cursor.execute(
+        """
+            SELECT
                 id_venda,
                 id_clinica,
                 id_cliente,
@@ -51,32 +23,62 @@ for linhas in clientes:
                 quantidade,
                 valor_pago,
                 data_venda,
-                ano_venda,
-                mes_venda
-            ) VALUES (
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s
-            )
-        """, linhas
+                EXTRACT(YEAR FROM data_venda) AS ano_venda,
+                EXTRACT(MONTH FROM data_venda) AS mes_venda
+            FROM
+                staging.vendas
+        """
     )
 
-conn_dw.commit()
+    vendas = cursor.fetchall()
 
-cursor.execute(
-    """SELECT
-            *
-        FROM
-            analytics.vendas
-    """
-)
+    cursor.close()
 
-dados = cursor.fetchall()
+    conn.close()
 
-print(dados)
+    return vendas
+
+def load_vendas(vendas):
+
+    conn = get_connect_dw()
+
+    cursor = conn.cursor()
+
+    for linhas in vendas:
+        cursor.execute(
+            """
+                INSERT INTO analytics.vendas(
+                    id_venda,
+                    id_clinica,
+                    id_cliente,
+                    id_produto,
+                    quantidade,
+                    valor_pago,
+                    data_venda,
+                    ano_venda,
+                    mes_venda
+                ) VALUES (
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s
+                )
+            """, linhas
+        )
+
+    conn.commit()
+
+    cursor.close()
+
+    conn.close()
+
+def pipeline_staging_analytics_vendas():
+
+    vendas = extract_vendas()
+
+    load_vendas(vendas)

@@ -10,6 +10,12 @@ from etl.raw_staging.origens import pipeline_raw_staging_origens
 from etl.raw_staging.produtos import pipeline_raw_staging_produtos
 from etl.raw_staging.vendas import pipeline_raw_staging_vendas
 
+from etl.staging_analytics.clientes import pipeline_staging_analytics_clientes
+from etl.staging_analytics.clinicas import pipeline_staging_analytics_clinicas
+from etl.staging_analytics.origens import pipeline_staging_analytics_origens
+from etl.staging_analytics.produtos import pipeline_staging_analytics_produtos
+from etl.staging_analytics.vendas import pipeline_staging_analytics_vendas
+
 if __name__ == "__main__":
     pipeline_oltp_raw_clientes()
     pipeline_oltp_raw_clinicas()
@@ -22,3 +28,9 @@ if __name__ == "__main__":
     pipeline_raw_staging_origens()
     pipeline_raw_staging_produtos()
     pipeline_raw_staging_vendas()
+
+    pipeline_staging_analytics_clientes()
+    pipeline_staging_analytics_clinicas()
+    pipeline_staging_analytics_origens()
+    pipeline_staging_analytics_produtos()
+    pipeline_staging_analytics_vendas()

@@ -1,61 +1,63 @@
-import psycopg2
-from dotenv import load_dotenv
-import os
+from config import get_connect_dw
 
-load_dotenv("variaveis.env")
+def extract_origens():
 
-conn_dw = psycopg2.connect(
-    host=os.getenv("host"),
-    port=os.getenv("port"),
-    database=os.getenv("database2"),
-    user=os.getenv("user"),
-    password=os.getenv("password")
-)
+    conn = get_connect_dw()
 
-cursor = conn_dw.cursor()
+    cursor = conn.cursor()
 
-cursor.execute(
-    """
-        TRUNCATE TABLE
-            analytics.origens
-    """
-)
-
-cursor.execute(
-    """
-        SELECT
-            id_origem,
-            origem
-        FROM
-            staging.origens
-    """
-)
-
-clientes = cursor.fetchall()
-
-for linhas in clientes:
     cursor.execute(
         """
-            INSERT INTO analytics.origens(
-                id_origem,
-                origem
-            ) VALUES (
-                %s,
-                %s
-            )
-        """, linhas
+            TRUNCATE TABLE
+                analytics.origens
+        """
     )
 
-conn_dw.commit()
+    cursor.execute(
+        """
+            SELECT
+                id_origem,
+                origem
+            FROM
+                staging.origens
+        """
+    )
 
-cursor.execute(
-    """SELECT
-            *
-        FROM
-            analytics.origens
-    """
-)
+    origens = cursor.fetchall()
 
-dados = cursor.fetchall()
+    cursor.close()
 
-print(dados)
+    conn.close()
+    
+    return origens
+
+def load_origens(origens):
+
+    conn = get_connect_dw()
+
+    cursor = conn.cursor()
+
+    for linhas in origens:
+        cursor.execute(
+            """
+                INSERT INTO analytics.origens(
+                    id_origem,
+                    origem
+                ) VALUES (
+                    %s,
+                    %s
+                )
+            """, linhas
+        )
+
+    conn.commit()
+
+    cursor.close()
+
+    conn.close()
+
+def pipeline_staging_analytics_origens():
+
+    origens = extract_origens()
+
+    load_origens(origens)

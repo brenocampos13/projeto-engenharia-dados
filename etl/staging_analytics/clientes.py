@@ -1,85 +1,87 @@
-import psycopg2
-from dotenv import load_dotenv
-import os
+from config import get_connect_dw
 
-load_dotenv("variaveis.env")
+def extract_clientes():
 
-conn_dw = psycopg2.connect(
-    host=os.getenv("host"),
-    port=os.getenv("port"),
-    database=os.getenv("database2"),
-    user=os.getenv("user"),
-    password=os.getenv("password")
-)
+    conn = get_connect_dw()
 
-cursor = conn_dw.cursor()
+    cursor = conn.cursor()
 
-cursor.execute(
-    """
-        TRUNCATE TABLE
-            analytics.clientes    
-    """
-)
-
-cursor.execute(
-    """
-        SELECT
-            id_cliente,
-            id_clinica,
-            nome_cliente,
-            data_nasc,
-            EXTRACT(YEAR FROM AGE(NOW(), data_nasc)) AS idade,
-            cpf,
-            genero,
-            profissao,
-            telefone,
-            id_origem
-        FROM
-            staging.clientes
-    """
-)
-
-clientes = cursor.fetchall()
-
-for linhas in clientes:
     cursor.execute(
         """
-            INSERT INTO analytics.clientes(
+            TRUNCATE TABLE
+                analytics.clientes    
+        """
+    )
+
+    cursor.execute(
+        """
+            SELECT
                 id_cliente,
                 id_clinica,
                 nome_cliente,
                 data_nasc,
-                idade,
+                EXTRACT(YEAR FROM AGE(NOW(), data_nasc)) AS idade,
                 cpf,
                 genero,
                 profissao,
                 telefone,
                 id_origem
-            ) VALUES (
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s
-            )
-        """, linhas
+            FROM
+                staging.clientes
+        """
     )
 
-conn_dw.commit()
+    clientes = cursor.fetchall()
 
-cursor.execute(
-    """SELECT
-            *
-        FROM
-            analytics.clientes
-    """
-)
+    cursor.close()
 
-dados = cursor.fetchall()
+    conn.close()
 
-print(dados)
+    return clientes
+
+def load_clientes(clientes):
+
+    conn = get_connect_dw()
+
+    cursor = conn.cursor()
+
+    for linhas in clientes:
+        cursor.execute(
+            """
+                INSERT INTO analytics.clientes(
+                    id_cliente,
+                    id_clinica,
+                    nome_cliente,
+                    data_nasc,
+                    idade,
+                    cpf,
+                    genero,
+                    profissao,
+                    telefone,
+                    id_origem
+                ) VALUES (
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s
+                )
+            """, linhas
+        )
+
+    conn.commit()
+
+    cursor.close()
+
+    conn.close()
+
+def pipeline_staging_analytics_clientes():
+
+    clientes = extract_clientes()
+
+    load_clientes(clientes)
