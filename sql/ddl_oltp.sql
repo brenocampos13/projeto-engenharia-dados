@@ -5,7 +5,7 @@ CREATE SCHEMA IF NOT EXISTS loja_oltp
 -- Cria a tabela clinicas
 CREATE TABLE IF NOT EXISTS loja_oltp.clinicas
 (
-    id_clinica integer NOT NULL DEFAULT nextval('loja_oltp.dim_clinicas_id_clinica_seq'::regclass),
+    id_clinica INTEGER GENERATED ALWAYS AS IDENTITY,
     clinica character varying(50) COLLATE pg_catalog."default",
     cnpj character varying(20) COLLATE pg_catalog."default",
     CONSTRAINT dim_clinicas_pkey PRIMARY KEY (id_clinica),
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS loja_oltp.clinicas
 -- Cria a tabela origens
 CREATE TABLE IF NOT EXISTS loja_oltp.origens
 (
-    id_origem integer NOT NULL DEFAULT nextval('loja_oltp.dim_origem_id_origem_seq'::regclass),
+    id_origem INTEGER GENERATED ALWAYS AS IDENTITY,
     origem character varying(50) COLLATE pg_catalog."default",
     CONSTRAINT dim_origem_pkey PRIMARY KEY (id_origem)
 )
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS loja_oltp.origens
 -- Cria a tabela produtos
 CREATE TABLE IF NOT EXISTS loja_oltp.produtos
 (
-    id_produto integer NOT NULL DEFAULT nextval('loja_oltp.dim_produtos_id_produto_seq'::regclass),
+    id_produto INTEGER GENERATED ALWAYS AS IDENTITY,
     nome_produto character varying(100) COLLATE pg_catalog."default" NOT NULL,
     marca character varying(50) COLLATE pg_catalog."default" NOT NULL,
     valor numeric(10,2) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS loja_oltp.produtos
 -- Cria a tabela clientes
 CREATE TABLE IF NOT EXISTS loja_oltp.clientes
 (
-    id_cliente integer NOT NULL DEFAULT nextval('loja_oltp.dim_clientes_id_cliente_seq'::regclass),
+    id_cliente INTEGER GENERATED ALWAYS AS IDENTITY,
     id_clinica integer,
     nome_cliente character varying(100) COLLATE pg_catalog."default",
     data_nasc date NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS loja_oltp.clientes
 -- Cria a tabela vendas
 CREATE TABLE IF NOT EXISTS loja_oltp.vendas
 (
-    id_venda integer NOT NULL DEFAULT nextval('loja_oltp.fato_vendas_id_venda_seq'::regclass),
+    id_venda INTEGER GENERATED ALWAYS AS IDENTITY,
     id_clinica integer,
     id_cliente integer,
     id_produto integer,
