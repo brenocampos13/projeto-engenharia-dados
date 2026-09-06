@@ -6,7 +6,7 @@ services:
 
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
+      POSTGRES_PASSWORD: 1234
       POSTGRES_DB: dw_projeto
 
     ports:

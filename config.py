@@ -4,23 +4,12 @@ import os
 
 load_dotenv("variaveis.env")
 
-
-def get_connect_oltp():
-    conn = psycopg2.connect(
-        host=os.getenv("host"),
-        port=os.getenv("port"),
-        database=os.getenv("database"),
-        user=os.getenv("user"),
-        password=os.getenv("password")
-    )
-    return conn
-
 def get_connect_dw():
     conn = psycopg2.connect(
-        host=os.getenv("host"),
-        port=os.getenv("port"),
-        database=os.getenv("database2"),
-        user=os.getenv("user"),
-        password=os.getenv("password")
+        host=os.getenv("DB_HOST"),
+        port=os.getenv("DB_PORT"),
+        database=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD")
     )
     return conn

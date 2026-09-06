@@ -1,13 +1,7 @@
-import psycopg2
-from dotenv import load_dotenv
-from config import get_connect_dw, get_connect_oltp
-import os
-
-
-load_dotenv("variaveis.env")
+from config import get_connect_dw
 
 def extract_produtos():
-    conn = get_connect_oltp()
+    conn = get_connect_dw()
 
     cursor = conn.cursor()
 

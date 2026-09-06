@@ -1,7 +1,7 @@
-from config import get_connect_dw, get_connect_oltp
+from config import get_connect_dw
 
 def extract_clientes():
-    conn = get_connect_oltp()
+    conn = get_connect_dw()
     cursor = conn.cursor()
     cursor.execute(
         """
