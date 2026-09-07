@@ -1,7 +1,4 @@
-from dotenv import load_dotenv
 from config import get_connect_dw
-
-load_dotenv("variaveis.env")
 
 def extract_vendas():
     conn = get_connect_dw()

@@ -1,7 +1,6 @@
 services:
   postgres:
     image: postgres:17
-
     container_name: postgres_dw
 
     environment:
@@ -16,5 +15,23 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d
 
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin_dw
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+
+    ports:
+      - "5050:80"
+
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+    depends_on:
+      - postgres
+
 volumes:
   postgres_data:
+  pgadmin_data:
