@@ -15,6 +15,13 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d
 
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "admin", "-d", "dw_projeto"]
+      interval: 5s
+      timeout: 3s
+      retries: 2
+      start_period: 12s
+
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: pgadmin_dw
@@ -31,6 +38,13 @@ services:
 
     depends_on:
       - postgres
+
+  etl_app:
+    build: .
+
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
   postgres_data:
