@@ -92,7 +92,7 @@ def seed_vendas(cur):
         vendas
     )
 
-def main():
+def seeds_main():
     conn = get_connect_dw()
 
     cur = conn.cursor()
@@ -111,4 +111,4 @@ def main():
     print("Seed executado com sucesso!")
 
 if __name__ == "__main__":
-    main()
+    seeds_main()
