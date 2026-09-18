@@ -9,7 +9,7 @@ def pipeline_staging_analytics():
     pipeline_staging_analytics_clientes()
     pipeline_staging_analytics_clinicas()
     pipeline_staging_analytics_origens()
-    pipeline_staging_analytics_vendas
+    pipeline_staging_analytics_vendas()
 
 if __name__ == "__main__":
     pipeline_staging_analytics()
