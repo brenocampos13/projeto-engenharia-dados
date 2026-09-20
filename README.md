@@ -2,9 +2,9 @@
 
 ## Sobre o Projeto
 
-Este projeto foi desenvolvido com o objetivo de praticar conceitos fundamentais de Engenharia de Dados, incluindo modelagem de dados, construção de pipelines ETL, organização em camadas analíticas e consultas SQL para análise de negócio.
+Este projeto foi desenvolvido com o objetivo de praticar conceitos fundamentais de Engenharia de Dados, simulando a construção de um pipeline moderno de dados utilizando PostgreSQL, Python, Docker e dbt.
 
-O projeto simula um ambiente de dados utilizando PostgreSQL como banco de dados e Python para o desenvolvimento dos processos ETL.
+O projeto foi inicialmente desenvolvido com todas as transformações realizadas em Python. Após a introdução do dbt, as camadas de transformação foram refatoradas para uma arquitetura ELT, centralizando as regras de negócio, testes e documentação na ferramenta.
 
 ---
 
@@ -16,43 +16,51 @@ Durante o desenvolvimento deste projeto foram praticados conceitos como:
 - SQL para Analytics
 - Desenvolvimento de ETLs com Python
 - Arquitetura de Data Warehouse
-- Organização em camadas (OLTP, RAW, STAGING e ANALYTICS)
-- Modularização de código
+- Arquitetura ELT
+- Transformações com dbt
+- Data Quality
+- Data Lineage
+- Documentação automática
+- Containerização com Docker
 - Versionamento com Git e GitHub
 
 ---
 
 ## Arquitetura
 
-O projeto foi estruturado utilizando uma arquitetura em camadas:
+O projeto utiliza uma arquitetura em camadas:
 
 ```text
 OLTP
  ↓
+Python
+ ↓
 RAW
  ↓
+dbt
+ ↓
 STAGING
+ ↓
+dbt
  ↓
 ANALYTICS
 ```
 
-### Camadas
+### OLTP
 
-#### OLTP
+Camada transacional contendo os dados operacionais da empresa.
 
-Camada transacional contendo os dados operacionais da loja.
-
-#### RAW
+### RAW
 
 Camada responsável por armazenar os dados brutos extraídos do sistema transacional.
 
-#### STAGING
+### STAGING
 
-Camada de preparação dos dados, onde são realizadas padronizações e transformações intermediárias.
+Camada intermediária onde são realizadas padronizações, renomeações e transformações iniciais.
 
-#### ANALYTICS
+### ANALYTICS
 
-Camada analítica utilizada para consultas e geração de indicadores de negócio.
+Camada analítica utilizada para construção de indicadores, dimensões e fatos para consumo por ferramentas de BI.
 
 ---
 
@@ -67,15 +75,18 @@ Camada analítica utilizada para consultas e geração de indicadores de negóci
 - SQL
 - Python
 
+### Ferramentas
+
+- Docker
+- dbt
+- Git
+- GitHub
+
 ### Bibliotecas
 
 - psycopg2
 - python-dotenv
-
-### Ferramentas
-
-- Git
-- GitHub
+- dbt-postgres
 
 ---
 
@@ -85,41 +96,33 @@ Camada analítica utilizada para consultas e geração de indicadores de negóci
 Projeto Engenharia de Dados
 │
 ├── docs
-│   ├── arquitetura.md
-│   ├── fluxo.md
-│   └── modelagem.md
 │
 ├── etl
 │   ├── oltp_raw
-│   │   ├── clientes.py
-│   │   ├── clinicas.py
-│   │   ├── origens.py
-│   │   ├── produtos.py
-│   │   └── vendas.py
 │   │
-│   ├── raw_staging
-│   │   ├── clientes.py
-│   │   ├── clinicas.py
-│   │   ├── origens.py
-│   │   ├── produtos.py
-│   │   └── vendas.py
+│   └── legado
+│       ├── raw_staging
+│       └── staging_analytics
+│
+├── projeto_dbt
+│   ├── models
+│   │   ├── staging
+│   │   └── analytics
 │   │
-│   └── staging_analytics
-│       ├── clientes.py
-│       ├── clinicas.py
-│       ├── origens.py
-│       ├── produtos.py
-│       └── vendas.py
+│   ├── tests
+│   ├── macros
+│   ├── snapshots
+│   ├── target
+│   └── dbt_project.yml
 │
 ├── sql
 │   ├── ddl_oltp.sql
 │   ├── ddl_raw.sql
-│   ├── ddl_staging.sql
-│   ├── ddl_analytics.sql
-│   └── consultas.sql
+│   └── legado
+│
+├── docker-compose.yml
 │
 ├── config.py
-├── main.py
 ├── requirements.txt
 ├── variaveis.env.example
 ├── README.md
@@ -128,35 +131,22 @@ Projeto Engenharia de Dados
 
 ---
 
-## Organização dos ETLs
+## Pipeline de Dados
 
-Cada pipeline foi estruturado seguindo o padrão:
+### Ingestão
 
-- extract()
-- load()
-- pipeline()
-
-O arquivo `main.py` atua como ponto central de execução, responsável por orquestrar todas as etapas do pipeline.
-
-### Fluxo de Execução
+O Python é responsável exclusivamente pela ingestão dos dados:
 
 ```text
-main.py
-│
-├── OLTP → RAW
-│
-├── RAW → STAGING
-│
-└── STAGING → ANALYTICS
+OLTP
+ ↓
+RAW
 ```
 
----
+Os pipelines realizam:
 
-## Fluxo dos Dados
-
-### ETL OLTP → RAW
-
-Extração dos dados do banco transacional e carga na camada RAW.
+- Extração dos dados do sistema transacional
+- Carregamento dos dados na camada RAW
 
 Tabelas processadas:
 
@@ -168,29 +158,36 @@ Tabelas processadas:
 
 ---
 
-### ETL RAW → STAGING
+## Transformações com dbt
+
+Após a ingestão, todas as transformações são realizadas pelo dbt.
+
+### Camada Staging
+
+Models:
+
+- stg_clientes
+- stg_clinicas
+- stg_origens
+- stg_produtos
+- stg_vendas
 
 Transformações realizadas:
 
-- Padronização de texto utilizando UPPER()
-- Renomeação de colunas para melhor legibilidade
-- Tratamento e preparação dos dados
+- Padronização de textos com UPPER()
+- Renomeação de colunas
+- Organização dos dados para consumo analítico
 
-Exemplos:
+### Camada Analytics
 
-```sql
-UPPER(nome_cliente)
-UPPER(genero)
-UPPER(profissao)
-```
+Models:
 
----
-
-### ETL STAGING → ANALYTICS
+- dim_clientes
+- fato_vendas
 
 Transformações realizadas:
 
-#### Clientes
+#### dim_clientes
 
 Criação da coluna:
 
@@ -199,10 +196,10 @@ Criação da coluna:
 Utilizando:
 
 ```sql
-EXTRACT(YEAR FROM AGE(NOW(), data_nasc))
+EXTRACT(YEAR FROM AGE(CURRENT_DATE, data_nasc))
 ```
 
-#### Vendas
+#### fato_vendas
 
 Criação das colunas:
 
@@ -213,56 +210,113 @@ Utilizando:
 
 ```sql
 EXTRACT(YEAR FROM data_venda)
-
 EXTRACT(MONTH FROM data_venda)
 ```
 
----
+Além disso, a fato consolida informações de:
 
-## Validação das Camadas
+- clientes
+- produtos
+- clínicas
 
-Foi realizada validação da quantidade de registros entre as camadas para garantir a integridade dos dados.
-
-| Camada    | Registros |
-| --------- | --------: |
-| RAW       |       912 |
-| STAGING   |       912 |
-| ANALYTICS |       912 |
-
-Nenhum registro foi perdido durante as transformações.
+por meio de joins entre os models da camada staging.
 
 ---
 
-## Consultas Analíticas
+## Qualidade dos Dados
 
-### 1. Faturamento Acumulado por Mês
+O projeto utiliza testes nativos do dbt para garantir a integridade dos dados.
 
-Utilizando:
+Testes implementados:
 
-- SUM()
-- Window Functions
-- OVER()
+### not_null
 
-### 2. Crescimento Mês contra Mês
+Garantia de preenchimento obrigatório.
 
-Utilizando:
+Exemplos:
 
-- LAG()
-- CTEs
-- Cálculo Percentual
+- id_cliente
+- cpf
+- genero
+- id_venda
 
-### 3. Produto Campeão de Faturamento por Mês
+### unique
 
-Utilizando:
+Garantia de unicidade.
 
-- ROW_NUMBER()
-- PARTITION BY
-- CTEs
-- Window Functions
+Exemplos:
 
-Observação:
+- id_cliente
+- cpf
 
-Em cenários com empates, a função DENSE_RANK() pode ser utilizada.
+### accepted_values
+
+Validação de domínio.
+
+Exemplo:
+
+```text
+M
+F
+```
+
+### relationships
+
+Validação de relacionamentos entre tabelas.
+
+Exemplos:
+
+- vendas → clientes
+- vendas → produtos
+- vendas → clinicas
+
+---
+
+## Documentação e Data Lineage
+
+O dbt gera automaticamente a documentação do projeto.
+
+Comandos:
+
+```bash
+dbt docs generate
+dbt docs serve
+```
+
+A documentação permite visualizar:
+
+- Models
+- Sources
+- Dependências
+- Data Lineage
+- Descrições das tabelas
+- Descrições das colunas
+
+---
+
+## Fluxo de Execução
+
+```text
+Docker Compose
+ ↓
+PostgreSQL
+ ↓
+DDL OLTP + RAW
+ ↓
+Seed OLTP
+ ↓
+Python ETL
+ ↓
+RAW
+ ↓
+dbt run
+ ↓
+STAGING
+ ↓
+ANALYTICS
+ ↓
+dbt test
+```
 
 ---
 
@@ -274,13 +328,7 @@ Em cenários com empates, a função DENSE_RANK() pode ser utilizada.
 git clone https://github.com/brenocampos13/projeto-engenharia-dados.git
 ```
 
-### 2. Instalar Dependências
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Configurar Variáveis de Ambiente
+### 2. Configurar Variáveis de Ambiente
 
 Criar um arquivo:
 
@@ -294,62 +342,104 @@ Utilizando como base:
 variaveis.env.example
 ```
 
-Exemplo:
-
-```env
-HOST=localhost
-PORT=5432
-DATABASE=loja_oltp
-DATABASE2=loja_dw
-USER=postgres
-PASSWORD=senha
-```
-
-### 4. Executar os Scripts SQL
-
-Executar os arquivos:
-
-```text
-ddl_oltp.sql
-ddl_raw.sql
-ddl_staging.sql
-ddl_analytics.sql
-```
-
-### 5. Executar o Pipeline
+### 3. Subir o Banco
 
 ```bash
-python main.py
+docker compose up -d
+```
+
+O comando irá:
+
+- Criar o PostgreSQL
+- Executar as DDLs
+- Popular o banco OLTP com dados de exemplo
+
+### 4. Executar Ingestão
+
+```bash
+python etl/oltp_raw/main_oltp_raw.py
+```
+
+### 5. Executar Transformações
+
+```bash
+dbt run
+```
+
+### 6. Executar Testes
+
+```bash
+dbt test
+```
+
+### 7. Gerar Documentação
+
+```bash
+dbt docs generate
+dbt docs serve
 ```
 
 ---
 
-## Aprendizados
+## Evolução do Projeto
 
-Durante o desenvolvimento deste projeto foram praticados conceitos como:
+### Versão 1
 
-- Arquitetura de Data Warehouse
-- Modelagem OLTP e Analítica
-- Desenvolvimento de ETLs em Python
-- SQL Analítico
-- Window Functions
-- Modularização de Código
-- Organização de Projetos de Dados
-- Versionamento com Git
-- Documentação Técnica
+Transformações realizadas em Python:
+
+```text
+RAW
+ ↓
+Python
+ ↓
+STAGING
+
+STAGING
+ ↓
+Python
+ ↓
+ANALYTICS
+```
+
+### Versão 2
+
+Migração das transformações para dbt:
+
+```text
+RAW
+ ↓
+dbt
+ ↓
+STAGING
+
+STAGING
+ ↓
+dbt
+ ↓
+ANALYTICS
+```
+
+Benefícios obtidos:
+
+- Menos código Python
+- Transformações centralizadas
+- Testes automatizados
+- Documentação automática
+- Data Lineage
+- Maior manutenibilidade
 
 ---
 
 ## Próximos Passos
 
-Melhorias planejadas para futuras versões:
+Evoluções planejadas:
 
-- Docker
-- dbt
+- Dockerização do dbt
 - Apache Airflow
-- Data Quality Checks
-- Integração com AWS S3
-- Testes Automatizados
+- AWS S3
+- AWS RDS
+- Spark / PySpark
+- Databricks
 
 ---
 
@@ -357,4 +447,4 @@ Melhorias planejadas para futuras versões:
 
 **Breno Campos Franco**
 
-Projeto desenvolvido como parte da formação prática em Engenharia de Dados, com foco na construção de pipelines ETL, modelagem de dados e arquitetura de Data Warehouse.
+Projeto desenvolvido como parte da formação prática em Engenharia de Dados, com foco na construção de pipelines modernos, modelagem de dados, arquitetura ELT e Data Warehousing.
