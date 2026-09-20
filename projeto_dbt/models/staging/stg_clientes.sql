@@ -8,4 +8,5 @@ SELECT
     UPPER(profissao) AS profissao,
     telefone,
     origemid AS id_origem
-FROM raw.clientes
+
+FROM {{ source('raw', 'clientes') }}

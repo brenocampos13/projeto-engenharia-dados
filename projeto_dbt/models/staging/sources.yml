@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+
+    tables:
+      - name: clientes
+      - name: produtos
+      - name: origens
+      - name: clinicas
+      - name: vendas
