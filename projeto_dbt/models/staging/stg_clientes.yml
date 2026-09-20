@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: stg_clientes
+
+    description: >
+      Camada de staging responsável por padronizar e preparar os dados
+      de clientes provenientes da camada raw.
+
+    columns:
+      - name: id_cliente
+
+        description: >
+          Identificador único do cliente.
+
+        tests:
+          - unique
+          - not_null
+
+      - name: id_clinica
+
+        description: >
+          Identificador da clínica do cliente.
+
+        tests:
+          - not_null
+
+      - name: cpf
+
+        description: >
+          CPF do cliente.
+
+        tests:
+          - unique
+          - not_null
+
+      - name: genero
+
+        description: >
+          Genero do cliente ('M' ou 'F')
+
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["M", "F"]

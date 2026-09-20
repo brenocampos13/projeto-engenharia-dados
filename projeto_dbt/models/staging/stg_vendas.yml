@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: stg_vendas
+
+    columns:
+      - name: id_venda
+
+        description: >
+          Identificador da venda.
+
+        tests:
+          - not_null
+
+      - name: id_cliente
+
+        description: >
+          Identificador único do cliente que realizou a compra.
+
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_clientes')
+                field: id_cliente
+
+      - name: id_clinica
+
+        description: >
+          Identificador da clínica do cliente.
+
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_clinicas')
+                field: id_clinica
+
+      - name: id_produto
+
+        description: >
+          Identificador do produto vendido.
+
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_produtos')
+                field: id_produto

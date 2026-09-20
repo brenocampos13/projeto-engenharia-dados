@@ -1,0 +1,38 @@
+models:
+  - name: fato_vendas
+
+    description: >
+      Tabela fato vendas pronta para consumo.
+
+    columns:
+      - name: id_venda
+
+        description: >
+          Identificador da venda.
+
+        tests:
+          - not_null
+
+      - name: nome_cliente
+
+        description: >
+          Nome do cliente que realizou a compra.
+
+        tests:
+          - not_null
+
+      - name: clinica
+
+        description: >
+          Nome da clínica do cliente.
+
+        tests:
+          - not_null
+
+      - name: nome_produto
+
+        description: >
+          Nome do produto vendido.
+
+        tests:
+          - not_null
