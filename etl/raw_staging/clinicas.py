@@ -1,10 +1,4 @@
-import psycopg2
-from dotenv import load_dotenv
 from config import get_connect_dw
-import os
-
-
-load_dotenv("variaveis.env")
 
 def extract_clinicas():
     conn = get_connect_dw()

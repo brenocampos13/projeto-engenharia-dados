@@ -1,6 +1,5 @@
 from config import get_connect_dw
 
-
 def extract_clinicas():
     conn = get_connect_dw()
 

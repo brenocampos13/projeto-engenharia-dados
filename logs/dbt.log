@@ -1,0 +1,194 @@
+[0m21:07:29.000612 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE3169E660>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE33C6FD90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE33C6F890>]}
+
+
+============================== 21:07:29.008781 | c9a9829b-0b47-4e02-a8db-16ddbc78e8a7 ==============================
+[0m21:07:29.008781 [info ] [MainThread]: Running with dbt=1.12.5
+[0m21:07:29.009735 [debug] [MainThread]: running dbt with arguments {'maximum_seed_size_mib': '1', 'no_print': 'None', 'version_check': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'static_parser': 'True', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': 'C:\\Users\\Breno\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'indirect_selection': 'eager', 'hints_enabled': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'invocation_command': 'dbt init projeto_dbt', 'log_path': 'logs'}
+[0m21:07:29.059243 [info ] [MainThread]: Creating dbt configuration folder at C:\Users\Breno\.dbt
+[0m21:07:29.063210 [debug] [MainThread]: Starter project path: C:\Users\Breno\Desktop\New folder\ANALISTA DE DADOS\Projeto Engenharia de Dados\.venv\Lib\site-packages\dbt\include\starter_project
+[0m21:07:29.117061 [info ] [MainThread]: Setting up your profile.
+[0m21:09:11.705381 [info ] [MainThread]: Profile projeto_dbt written to C:\Users\Breno\.dbt\profiles.yml using target's profile_template.yml and your supplied values.
+[0m21:09:11.709069 [info ] [MainThread]: Running dbt debug to validate the project...
+[0m21:09:11.710032 [info ] [MainThread]: dbt version: 1.12.5
+[0m21:09:11.712659 [info ] [MainThread]: python version: 3.13.7
+[0m21:09:11.713962 [info ] [MainThread]: python path: C:\Users\Breno\Desktop\New folder\ANALISTA DE DADOS\Projeto Engenharia de Dados\.venv\Scripts\python.exe
+[0m21:09:11.714738 [info ] [MainThread]: os info: Windows-10-10.0.19045-SP0
+[0m21:09:11.800916 [info ] [MainThread]: Using profiles dir at C:\Users\Breno\.dbt
+[0m21:09:11.801715 [info ] [MainThread]: Using profiles.yml file at C:\Users\Breno\.dbt\profiles.yml
+[0m21:09:11.802362 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\Breno\Desktop\New folder\ANALISTA DE DADOS\Projeto Engenharia de Dados\projeto_dbt\dbt_project.yml
+[0m21:09:11.804073 [info ] [MainThread]: adapter type: postgres
+[0m21:09:11.808848 [info ] [MainThread]: adapter version: 1.11.0
+[0m21:09:12.042431 [info ] [MainThread]: Configuration:
+[0m21:09:12.043254 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m21:09:12.043798 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m21:09:12.044506 [info ] [MainThread]: Required dependencies:
+[0m21:09:12.045698 [debug] [MainThread]: Executing "git --help"
+[0m21:09:12.115302 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m21:09:12.116124 [debug] [MainThread]: STDERR: "b''"
+[0m21:09:12.116651 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m21:09:12.117221 [info ] [MainThread]: Connection:
+[0m21:09:12.117768 [info ] [MainThread]:   host: localhost
+[0m21:09:12.118273 [info ] [MainThread]:   port: 5432
+[0m21:09:12.118776 [info ] [MainThread]:   user: admin
+[0m21:09:12.119318 [info ] [MainThread]:   database: dw_projeto
+[0m21:09:12.119807 [info ] [MainThread]:   schema: staging
+[0m21:09:12.120300 [info ] [MainThread]:   connect_timeout: 10
+[0m21:09:12.120788 [info ] [MainThread]:   role: None
+[0m21:09:12.121469 [info ] [MainThread]:   search_path: None
+[0m21:09:12.122276 [info ] [MainThread]:   keepalives_idle: 0
+[0m21:09:12.122993 [info ] [MainThread]:   sslmode: None
+[0m21:09:12.123579 [info ] [MainThread]:   sslcert: None
+[0m21:09:12.124436 [info ] [MainThread]:   sslkey: None
+[0m21:09:12.127528 [info ] [MainThread]:   sslrootcert: None
+[0m21:09:12.128508 [info ] [MainThread]:   application_name: dbt
+[0m21:09:12.129827 [info ] [MainThread]:   autocommit: False
+[0m21:09:12.130483 [info ] [MainThread]:   retries: 1
+[0m21:09:12.131394 [info ] [MainThread]: Registered adapter: postgres=1.11.0
+[0m21:09:12.908116 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m21:09:16.738441 [debug] [MainThread]: Using postgres connection "debug"
+[0m21:09:16.739163 [debug] [MainThread]: On debug: select 1 as id
+[0m21:09:16.739734 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m21:09:20.815650 [debug] [MainThread]: Postgres adapter: Got a retryable error when attempting to open a postgres connection.
+1 attempts remaining. Retrying in 0 seconds.
+Error:
+connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+[0m21:09:24.883443 [debug] [MainThread]: Postgres adapter: Error running SQL: select 1 as id
+[0m21:09:24.884128 [debug] [MainThread]: Postgres adapter: Rolling back transaction.
+[0m21:09:24.884692 [debug] [MainThread]: On debug: No close available on handle
+[0m21:09:24.885160 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m21:09:24.885829 [info ] [MainThread]: [31m1 check failed:[0m
+[0m21:09:24.886535 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+  	Is the server running on that host and accepting TCP/IP connections?
+  connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+  	Is the server running on that host and accepting TCP/IP connections?
+  
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m21:09:24.887494 [info ] [MainThread]: Your new dbt project "projeto_dbt" was created!
+Initialized new project in C:\Users\Breno\Desktop\New folder\ANALISTA DE DADOS\Projeto Engenharia de Dados\projeto_dbt\projeto_dbt
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m21:09:24.888179 [info ] [MainThread]: [31mYour profile may need adjustments. You can find the logs of `dbt debug` above[0m
+[0m21:09:24.889934 [debug] [MainThread]: Command `dbt init` succeeded at 21:09:24.889728 after 116.16 seconds
+[0m21:09:24.890445 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m21:09:24.890962 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE33E3DF30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE33D083B0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE33F6EF10>]}
+[0m21:09:24.891526 [debug] [MainThread]: Flushing usage events
+[0m21:09:26.776650 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m21:09:38.160295 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018307C3E660>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001830A20FD90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001830A20F890>]}
+
+
+============================== 21:09:38.167561 | a83d6e33-70fc-4a99-bd3e-f4be799719c3 ==============================
+[0m21:09:38.167561 [info ] [MainThread]: Running with dbt=1.12.5
+[0m21:09:38.168843 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'maximum_seed_size_mib': '1', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'version_check': 'True', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'C:\\Users\\Breno\\.dbt', 'indirect_selection': 'eager', 'hints_enabled': 'True', 'invocation_command': 'dbt debug', 'use_experimental_parser': 'False', 'use_colors': 'True', 'log_path': 'logs'}
+[0m21:09:38.211996 [info ] [MainThread]: dbt version: 1.12.5
+[0m21:09:38.212660 [info ] [MainThread]: python version: 3.13.7
+[0m21:09:38.213177 [info ] [MainThread]: python path: C:\Users\Breno\Desktop\New folder\ANALISTA DE DADOS\Projeto Engenharia de Dados\.venv\Scripts\python.exe
+[0m21:09:38.213682 [info ] [MainThread]: os info: Windows-10-10.0.19045-SP0
+[0m21:09:38.331128 [info ] [MainThread]: Using profiles dir at C:\Users\Breno\.dbt
+[0m21:09:38.332147 [info ] [MainThread]: Using profiles.yml file at C:\Users\Breno\.dbt\profiles.yml
+[0m21:09:38.332835 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\Breno\Desktop\New folder\ANALISTA DE DADOS\Projeto Engenharia de Dados\dbt_project.yml
+[0m21:09:38.334553 [info ] [MainThread]: adapter type: postgres
+[0m21:09:38.335155 [info ] [MainThread]: adapter version: 1.11.0
+[0m21:09:38.335838 [info ] [MainThread]: Configuration:
+[0m21:09:38.336436 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m21:09:38.337045 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m21:09:38.337731 [info ] [MainThread]: Required dependencies:
+[0m21:09:38.338468 [debug] [MainThread]: Executing "git --help"
+[0m21:09:38.412279 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m21:09:38.412994 [debug] [MainThread]: STDERR: "b''"
+[0m21:09:38.413509 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m21:09:38.414044 [info ] [MainThread]: Connection:
+[0m21:09:38.414557 [info ] [MainThread]:   host: localhost
+[0m21:09:38.415048 [info ] [MainThread]:   port: 5432
+[0m21:09:38.415518 [info ] [MainThread]:   user: admin
+[0m21:09:38.415991 [info ] [MainThread]:   database: dw_projeto
+[0m21:09:38.416459 [info ] [MainThread]:   schema: staging
+[0m21:09:38.416979 [info ] [MainThread]:   connect_timeout: 10
+[0m21:09:38.417575 [info ] [MainThread]:   role: None
+[0m21:09:38.418161 [info ] [MainThread]:   search_path: None
+[0m21:09:38.418676 [info ] [MainThread]:   keepalives_idle: 0
+[0m21:09:38.422524 [info ] [MainThread]:   sslmode: None
+[0m21:09:38.423475 [info ] [MainThread]:   sslcert: None
+[0m21:09:38.424236 [info ] [MainThread]:   sslkey: None
+[0m21:09:38.425024 [info ] [MainThread]:   sslrootcert: None
+[0m21:09:38.425780 [info ] [MainThread]:   application_name: dbt
+[0m21:09:38.426403 [info ] [MainThread]:   autocommit: False
+[0m21:09:38.427010 [info ] [MainThread]:   retries: 1
+[0m21:09:38.427962 [info ] [MainThread]: Registered adapter: postgres=1.11.0
+[0m21:09:39.186056 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m21:09:39.377389 [debug] [MainThread]: Using postgres connection "debug"
+[0m21:09:39.377948 [debug] [MainThread]: On debug: select 1 as id
+[0m21:09:39.378445 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m21:09:43.442838 [debug] [MainThread]: Postgres adapter: Got a retryable error when attempting to open a postgres connection.
+1 attempts remaining. Retrying in 0 seconds.
+Error:
+connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+[0m21:09:47.533664 [debug] [MainThread]: Postgres adapter: Error running SQL: select 1 as id
+[0m21:09:47.534257 [debug] [MainThread]: Postgres adapter: Rolling back transaction.
+[0m21:09:47.534734 [debug] [MainThread]: On debug: No close available on handle
+[0m21:09:47.535530 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m21:09:47.538812 [info ] [MainThread]: [31m2 checks failed:[0m
+[0m21:09:47.539988 [info ] [MainThread]: Project loading failed for the following reason:
+ project path <C:\Users\Breno\Desktop\New folder\ANALISTA DE DADOS\Projeto Engenharia de Dados\dbt_project.yml> not found
+
+[0m21:09:47.540815 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+  	Is the server running on that host and accepting TCP/IP connections?
+  connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+  	Is the server running on that host and accepting TCP/IP connections?
+  
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m21:09:47.542861 [debug] [MainThread]: Command `dbt debug` failed at 21:09:47.542615 after 9.71 seconds
+[0m21:09:47.543437 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m21:09:47.543929 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001830A3DA190>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001830A431A30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001830A2E7240>]}
+[0m21:09:47.544496 [debug] [MainThread]: Flushing usage events
+[0m21:09:49.013319 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m21:11:49.876761 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000028766E4E660>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002876941FD90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002876941F890>]}
+
+
+============================== 21:11:49.885085 | ee55c637-7c1d-4e9b-be31-077e6dc88b4b ==============================
+[0m21:11:49.885085 [info ] [MainThread]: Running with dbt=1.12.5
+[0m21:11:49.886093 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'maximum_seed_size_mib': '1', 'target_path': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'C:\\Users\\Breno\\.dbt', 'indirect_selection': 'eager', 'hints_enabled': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'invocation_command': 'dbt init projeto_dbt', 'log_path': 'logs'}
+[0m21:11:49.939637 [info ] [MainThread]: A project called projeto_dbt already exists here.
+[0m21:11:49.941397 [debug] [MainThread]: Command `dbt init` succeeded at 21:11:49.941184 after 0.41 seconds
+[0m21:11:49.941964 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000028769481CD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000287694B83B0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000028769466140>]}
+[0m21:11:49.942519 [debug] [MainThread]: Flushing usage events
+[0m21:11:51.550942 [debug] [MainThread]: An error was encountered while trying to flush usage events

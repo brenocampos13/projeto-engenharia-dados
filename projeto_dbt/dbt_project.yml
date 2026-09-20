@@ -1,0 +1,25 @@
+name: "projeto_dbt"
+version: "1.0.0"
+
+profile: "projeto_dbt"
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  projeto_dbt:
+    staging:
+      +schema: staging
+      +materialized: table
+
+    analytics:
+      +schema: analytics
+      +materialized: table
