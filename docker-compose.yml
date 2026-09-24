@@ -37,15 +37,8 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
-    depends_on:
-      - postgres
-
   etl_app:
     build: .
-
-    depends_on:
-      postgres:
-        condition: service_healthy
 
   dbt:
     build:
@@ -59,10 +52,6 @@ services:
       DB_PORT: 5432
 
     container_name: dbt_runner
-
-    depends_on:
-      postgres:
-        condition: service_healthy
 
 volumes:
   postgres_data:
