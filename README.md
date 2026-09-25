@@ -1,14 +1,18 @@
 # Projeto Engenharia de Dados
 
+![alt text](arquitetura.png)
+
 ## Sobre o Projeto
 
-Este projeto foi desenvolvido com o objetivo de praticar conceitos fundamentais de Engenharia de Dados, simulando a construção de um pipeline moderno de dados utilizando PostgreSQL, Python, Docker e dbt.
+Este projeto foi desenvolvido com o objetivo de praticar os principais conceitos de Engenharia de Dados através da construção de um pipeline completo de dados utilizando PostgreSQL, Python, Docker, dbt e Apache Airflow.
 
-O projeto foi inicialmente desenvolvido com todas as transformações realizadas em Python. Após a introdução do dbt, as camadas de transformação foram refatoradas para uma arquitetura ELT, centralizando as regras de negócio, testes e documentação na ferramenta.
+Ao longo do desenvolvimento, o projeto evoluiu de uma arquitetura baseada exclusivamente em transformações Python para uma arquitetura ELT moderna, utilizando dbt para transformações, testes e documentação, além de Apache Airflow para orquestração dos pipelines.
+
+O resultado é uma solução completa contendo ingestão de dados, modelagem analítica, testes automatizados, documentação e orquestração de containers.
 
 ---
 
-## Objetivos
+# Objetivos
 
 Durante o desenvolvimento deste projeto foram praticados conceitos como:
 
@@ -22,67 +26,97 @@ Durante o desenvolvimento deste projeto foram praticados conceitos como:
 - Data Lineage
 - Documentação automática
 - Containerização com Docker
+- Orquestração de pipelines com Apache Airflow
 - Versionamento com Git e GitHub
 
 ---
 
-## Arquitetura
+# Arquitetura da Solução
 
-O projeto utiliza uma arquitetura em camadas:
+A arquitetura final do projeto segue o fluxo:
 
 ```text
 OLTP
- ↓
-Python
- ↓
+  ↓
+Python ETL
+  ↓
 RAW
- ↓
+  ↓
 dbt
- ↓
+  ↓
 STAGING
- ↓
+  ↓
 dbt
- ↓
+  ↓
 ANALYTICS
 ```
 
-### OLTP
+A execução de todo o pipeline é orquestrada pelo Apache Airflow utilizando DockerOperator.
 
-Camada transacional contendo os dados operacionais da empresa.
-
-### RAW
-
-Camada responsável por armazenar os dados brutos extraídos do sistema transacional.
-
-### STAGING
-
-Camada intermediária onde são realizadas padronizações, renomeações e transformações iniciais.
-
-### ANALYTICS
-
-Camada analítica utilizada para construção de indicadores, dimensões e fatos para consumo por ferramentas de BI.
+```text
+Airflow
+    ↓
+etl_app
+    ↓
+RAW
+    ↓
+dbt_runner
+    ↓
+STAGING
+    ↓
+ANALYTICS
+    ↓
+dbt test
+```
 
 ---
 
-## Tecnologias Utilizadas
+# Camadas do Data Warehouse
 
-### Banco de Dados
+## OLTP
+
+Camada transacional contendo os dados operacionais utilizados como origem dos dados.
+
+## RAW
+
+Camada responsável por armazenar os dados extraídos do sistema transacional sem aplicação de regras de negócio.
+
+## STAGING
+
+Camada intermediária responsável por:
+
+- Padronização de dados
+- Renomeação de colunas
+- Organização das informações para consumo analítico
+
+As models desta camada são materializadas como Views.
+
+## ANALYTICS
+
+Camada analítica responsável pela construção das tabelas dimensionais e fatos utilizadas para análise de dados e consumo por ferramentas de BI.
+
+---
+
+# Tecnologias Utilizadas
+
+## Banco de Dados
 
 - PostgreSQL
 
-### Linguagens
+## Linguagens
 
 - SQL
 - Python
 
-### Ferramentas
+## Ferramentas
 
 - Docker
+- Apache Airflow
 - dbt
 - Git
 - GitHub
 
-### Bibliotecas
+## Bibliotecas
 
 - psycopg2
 - python-dotenv
@@ -90,19 +124,27 @@ Camada analítica utilizada para construção de indicadores, dimensões e fatos
 
 ---
 
-## Estrutura do Projeto
+# Estrutura do Projeto
 
 ```text
 Projeto Engenharia de Dados
+│
+├── airflow
+│   ├── dags
+│   ├── logs
+│   ├── plugins
+│   └── docker-compose-airflow.yml
 │
 ├── docs
 │
 ├── etl
 │   ├── oltp_raw
-│   │
-│   └── legado
-│       ├── raw_staging
-│       └── staging_analytics
+│   ├── legado
+│   ├── seed_oltp.py
+│   ├── main.py
+│   ├── config.py
+│   ├── Dockerfile
+│   └── requirements.txt
 │
 ├── projeto_dbt
 │   ├── models
@@ -112,41 +154,23 @@ Projeto Engenharia de Dados
 │   ├── tests
 │   ├── macros
 │   ├── snapshots
-│   ├── target
-│   └── dbt_project.yml
+│   ├── dbt_project.yml
+│   ├── profiles.yml
+│   └── Dockerfile
 │
 ├── sql
-│   ├── ddl_oltp.sql
-│   ├── ddl_raw.sql
-│   └── legado
 │
 ├── docker-compose.yml
-│
-├── config.py
-├── requirements.txt
-├── variaveis.env.example
+├── .env.example
 ├── README.md
 └── .gitignore
 ```
 
 ---
 
-## Pipeline de Dados
+# Pipeline de Ingestão
 
-### Ingestão
-
-O Python é responsável exclusivamente pela ingestão dos dados:
-
-```text
-OLTP
- ↓
-RAW
-```
-
-Os pipelines realizam:
-
-- Extração dos dados do sistema transacional
-- Carregamento dos dados na camada RAW
+O processo de ingestão é realizado por pipelines Python responsáveis por carregar dados da camada OLTP para a camada RAW.
 
 Tabelas processadas:
 
@@ -156,13 +180,23 @@ Tabelas processadas:
 - produtos
 - vendas
 
+Fluxo:
+
+```text
+OLTP
+  ↓
+Python
+  ↓
+RAW
+```
+
 ---
 
-## Transformações com dbt
+# Transformações com dbt
 
-Após a ingestão, todas as transformações são realizadas pelo dbt.
+Após a ingestão dos dados, todas as transformações são realizadas através do dbt.
 
-### Camada Staging
+## Camada Staging
 
 Models:
 
@@ -172,66 +206,58 @@ Models:
 - stg_produtos
 - stg_vendas
 
-Transformações realizadas:
+Transformações:
 
-- Padronização de textos com UPPER()
+- Padronização de textos
 - Renomeação de colunas
-- Organização dos dados para consumo analítico
+- Organização dos dados para análise
 
-### Camada Analytics
+## Camada Analytics
 
-Models:
+### dim_clientes
 
-- dim_clientes
-- fato_vendas
+Responsável por consolidar informações dos clientes.
 
-Transformações realizadas:
-
-#### dim_clientes
-
-Criação da coluna:
-
-- idade
-
-Utilizando:
+Inclui o cálculo da coluna:
 
 ```sql
 EXTRACT(YEAR FROM AGE(CURRENT_DATE, data_nasc))
 ```
 
-#### fato_vendas
+gerando o atributo:
 
-Criação das colunas:
+```text
+idade
+```
+
+### fato_vendas
+
+Responsável por consolidar informações de vendas através de joins entre as entidades de negócio.
+
+Inclui a criação dos atributos:
+
+```sql
+EXTRACT(YEAR FROM data_venda)
+```
+
+```sql
+EXTRACT(MONTH FROM data_venda)
+```
+
+gerando:
 
 - ano_venda
 - mes_venda
 
-Utilizando:
-
-```sql
-EXTRACT(YEAR FROM data_venda)
-EXTRACT(MONTH FROM data_venda)
-```
-
-Além disso, a fato consolida informações de:
-
-- clientes
-- produtos
-- clínicas
-
-por meio de joins entre os models da camada staging.
-
 ---
 
-## Qualidade dos Dados
+# Qualidade dos Dados
 
-O projeto utiliza testes nativos do dbt para garantir a integridade dos dados.
+O projeto utiliza testes nativos do dbt para validação dos dados.
 
-Testes implementados:
+## not_null
 
-### not_null
-
-Garantia de preenchimento obrigatório.
+Validação de preenchimento obrigatório.
 
 Exemplos:
 
@@ -240,16 +266,16 @@ Exemplos:
 - genero
 - id_venda
 
-### unique
+## unique
 
-Garantia de unicidade.
+Validação de unicidade.
 
 Exemplos:
 
 - id_cliente
 - cpf
 
-### accepted_values
+## accepted_values
 
 Validação de domínio.
 
@@ -260,9 +286,9 @@ M
 F
 ```
 
-### relationships
+## relationships
 
-Validação de relacionamentos entre tabelas.
+Validação de integridade referencial.
 
 Exemplos:
 
@@ -272,179 +298,192 @@ Exemplos:
 
 ---
 
-## Documentação e Data Lineage
+# Orquestração com Apache Airflow
 
-O dbt gera automaticamente a documentação do projeto.
+O projeto utiliza Apache Airflow para orquestrar os containers responsáveis pela execução do pipeline.
+
+Fluxo implementado:
+
+```text
+ETL Python
+    ↓
+dbt run
+    ↓
+dbt test
+```
+
+Exemplo de DAG:
+
+```text
+extract_load
+    ↓
+dbt_transform
+    ↓
+dbt_test
+```
+
+A comunicação entre os containers é realizada através de redes Docker compartilhadas, permitindo que os pipelines acessem o PostgreSQL durante a execução.
+
+---
+
+# Documentação e Data Lineage
+
+O dbt gera automaticamente documentação técnica e Data Lineage do projeto.
 
 Comandos:
 
 ```bash
 dbt docs generate
+```
+
+```bash
 dbt docs serve
 ```
 
 A documentação permite visualizar:
 
-- Models
 - Sources
+- Models
 - Dependências
 - Data Lineage
-- Descrições das tabelas
-- Descrições das colunas
+- Colunas
+- Descrições
+- Testes
 
 ---
 
-## Fluxo de Execução
+# Fluxo Completo de Execução
 
 ```text
 Docker Compose
- ↓
+    ↓
 PostgreSQL
- ↓
+    ↓
 DDL OLTP + RAW
- ↓
+    ↓
 Seed OLTP
- ↓
+    ↓
 Python ETL
- ↓
+    ↓
 RAW
- ↓
+    ↓
 dbt run
- ↓
+    ↓
 STAGING
- ↓
+    ↓
 ANALYTICS
- ↓
+    ↓
+dbt test
+```
+
+Ou de forma automatizada:
+
+```text
+Airflow
+    ↓
+DockerOperator
+    ↓
+etl_app
+    ↓
+dbt_runner
+    ↓
 dbt test
 ```
 
 ---
 
-## Como Executar
+# Como Executar
 
-### 1. Clonar o Repositório
+## 1. Clonar o Repositório
 
 ```bash
 git clone https://github.com/brenocampos13/projeto-engenharia-dados.git
 ```
 
-### 2. Configurar Variáveis de Ambiente
+## 2. Configurar Variáveis de Ambiente
 
 Criar um arquivo:
 
 ```text
-variaveis.env
+.env
 ```
 
-Utilizando como base:
+utilizando como base:
 
 ```text
-variaveis.env.example
+.env.example
 ```
 
-### 3. Subir o Banco
+## 3. Subir PostgreSQL
 
 ```bash
 docker compose up -d
 ```
 
-O comando irá:
-
-- Criar o PostgreSQL
-- Executar as DDLs
-- Popular o banco OLTP com dados de exemplo
-
-### 4. Executar Ingestão
+## 4. Executar ETL
 
 ```bash
-python etl/oltp_raw/main_oltp_raw.py
+python etl/main.py
 ```
 
-### 5. Executar Transformações
+## 5. Executar Transformações
 
 ```bash
 dbt run
 ```
 
-### 6. Executar Testes
+## 6. Executar Testes
 
 ```bash
 dbt test
 ```
 
-### 7. Gerar Documentação
+## 7. Executar Orquestração com Airflow
 
 ```bash
-dbt docs generate
-dbt docs serve
+docker compose -f docker-compose-airflow.yml up -d
 ```
 
----
-
-## Evolução do Projeto
-
-### Versão 1
-
-Transformações realizadas em Python:
+Interface:
 
 ```text
-RAW
- ↓
-Python
- ↓
-STAGING
-
-STAGING
- ↓
-Python
- ↓
-ANALYTICS
+http://localhost:8080
 ```
-
-### Versão 2
-
-Migração das transformações para dbt:
-
-```text
-RAW
- ↓
-dbt
- ↓
-STAGING
-
-STAGING
- ↓
-dbt
- ↓
-ANALYTICS
-```
-
-Benefícios obtidos:
-
-- Menos código Python
-- Transformações centralizadas
-- Testes automatizados
-- Documentação automática
-- Data Lineage
-- Maior manutenibilidade
 
 ---
 
-## Próximos Passos
-
-Evoluções planejadas:
-
-- Dockerização do dbt
-- Apache Airflow
-- AWS S3
-- AWS RDS
-- Spark / PySpark
-- Databricks
-
----
-
-## Autor
+# Autor
 
 **Breno Campos Franco**
 
-Projeto desenvolvido como parte da formação prática em Engenharia de Dados, com foco na construção de pipelines modernos, modelagem de dados, arquitetura ELT e Data Warehousing.
+Projeto desenvolvido como parte da formação prática em Engenharia de Dados, com foco em:
+
+- Data Warehousing
+- ETL / ELT
+- PostgreSQL
+- Docker
+- dbt
+- Apache Airflow
+- Arquitetura de Dados Moderna
+
+---
+
+# Status do Projeto
+
+```text
+✅ Concluído
+```
+
+Tecnologias praticadas:
+
+```text
+✅ SQL
+✅ PostgreSQL
+✅ Python
+✅ ETL
+✅ Git
+✅ GitHub
+✅ Docker
+✅ dbt
+✅ Apache Airflow
+```
