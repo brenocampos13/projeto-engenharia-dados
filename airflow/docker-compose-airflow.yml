@@ -75,6 +75,7 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ..:/projeto
+      - /var/run/docker.sock:/var/run/docker.sock
 
     command: webserver
 
@@ -101,6 +102,7 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ..:/projeto
+      - /var/run/docker.sock:/var/run/docker.sock
 
     command: scheduler
 

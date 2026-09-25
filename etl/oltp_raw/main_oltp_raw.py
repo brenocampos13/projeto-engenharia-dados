@@ -1,8 +1,8 @@
-from etl.oltp_raw.clientes import pipeline_oltp_raw_clientes
-from etl.oltp_raw.clinicas import pipeline_oltp_raw_clinicas
-from etl.oltp_raw.origens import pipeline_oltp_raw_origens
-from etl.oltp_raw.produtos import pipeline_oltp_raw_produtos
-from etl.oltp_raw.vendas import pipeline_oltp_raw_vendas
+from oltp_raw.clientes import pipeline_oltp_raw_clientes
+from oltp_raw.clinicas import pipeline_oltp_raw_clinicas
+from oltp_raw.origens import pipeline_oltp_raw_origens
+from oltp_raw.produtos import pipeline_oltp_raw_produtos
+from oltp_raw.vendas import pipeline_oltp_raw_vendas
 
 def pipeline_oltp_raw():
     pipeline_oltp_raw_clientes()

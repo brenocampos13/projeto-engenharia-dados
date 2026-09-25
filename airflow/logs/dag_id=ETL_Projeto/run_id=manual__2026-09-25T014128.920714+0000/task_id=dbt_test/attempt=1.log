@@ -1,0 +1,88 @@
+[2026-09-25T01:41:47.263+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-25T01:41:47.305+0000] {taskinstance.py:2631} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: ETL_Projeto.dbt_test manual__2026-09-25T01:41:28.920714+00:00 [queued]>
+[2026-09-25T01:41:47.320+0000] {taskinstance.py:2631} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: ETL_Projeto.dbt_test manual__2026-09-25T01:41:28.920714+00:00 [queued]>
+[2026-09-25T01:41:47.321+0000] {taskinstance.py:2884} INFO - Starting attempt 1 of 1
+[2026-09-25T01:41:47.340+0000] {taskinstance.py:2907} INFO - Executing <Task(DockerOperator): dbt_test> on 2026-09-25 01:41:28.920714+00:00
+[2026-09-25T01:41:47.355+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=3768) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-09-25T01:41:47.354+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'ETL_Projeto', 'dbt_test', 'manual__2026-09-25T01:41:28.920714+00:00', '--job-id', '44', '--raw', '--subdir', 'DAGS_FOLDER/teste_python.py', '--cfg-path', '/tmp/tmpynyuxyd4']
+[2026-09-25T01:41:47.358+0000] {standard_task_runner.py:72} INFO - Started process 3769 to run task
+[2026-09-25T01:41:47.359+0000] {standard_task_runner.py:105} INFO - Job 44: Subtask dbt_test
+[2026-09-25T01:41:47.455+0000] {task_command.py:467} INFO - Running <TaskInstance: ETL_Projeto.dbt_test manual__2026-09-25T01:41:28.920714+00:00 [running]> on host b6255e59cd80
+[2026-09-25T01:41:47.610+0000] {taskinstance.py:3157} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='ETL_Projeto' AIRFLOW_CTX_TASK_ID='dbt_test' AIRFLOW_CTX_EXECUTION_DATE='2026-09-25T01:41:28.920714+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-25T01:41:28.920714+00:00'
+[2026-09-25T01:41:47.612+0000] {taskinstance.py:740} INFO - ::endgroup::
+[2026-09-25T01:41:47.729+0000] {docker.py:352} INFO - Starting docker container from image dbt_runner:latest
+[2026-09-25T01:41:47.740+0000] {docker.py:360} WARNING - Using remote engine or docker-in-docker and mounting temporary volume from host is not supported. Falling back to `mount_tmp_dir=False` mode. You can set `mount_tmp_dir` parameter to False to disable mounting and remove the warning
+[2026-09-25T01:41:51.358+0000] {docker.py:72} INFO - [0m01:41:51  Running with dbt=1.12.5
+[2026-09-25T01:41:51.755+0000] {docker.py:72} INFO - [0m01:41:51  Registered adapter: postgres=1.11.0
+[2026-09-25T01:41:52.233+0000] {docker.py:72} INFO - [0m01:41:52  Unable to do partial parsing because profile has changed
+[2026-09-25T01:41:54.675+0000] {docker.py:72} INFO - [0m01:41:54  [[33mWARNING[0m][MissingArgumentsPropertyInGenericTestDeprecation]: Deprecated
+[2026-09-25T01:41:54.677+0000] {docker.py:72} INFO - functionality
+[2026-09-25T01:41:54.681+0000] {docker.py:72} INFO - Found top-level arguments to test `accepted_values` defined on 'stg_clientes' in
+[2026-09-25T01:41:54.682+0000] {docker.py:72} INFO - package 'projeto_dbt' (models/staging/stg_clientes.yml). Arguments to generic
+[2026-09-25T01:41:54.684+0000] {docker.py:72} INFO - tests should be nested under the `arguments` property.
+[2026-09-25T01:41:55.418+0000] {docker.py:72} INFO - [0m01:41:55  Found 7 models, 22 data tests, 5 sources, 477 macros
+[2026-09-25T01:41:55.424+0000] {docker.py:72} INFO - [0m01:41:55
+[2026-09-25T01:41:55.427+0000] {docker.py:72} INFO - [0m01:41:55  Concurrency: 4 threads (target='dev')
+[2026-09-25T01:41:55.428+0000] {docker.py:72} INFO - [0m01:41:55
+[2026-09-25T01:41:55.592+0000] {docker.py:72} INFO - [0m01:41:55  1 of 22 START test accepted_values_dim_clientes_genero__M__F ................... [RUN]
+[2026-09-25T01:41:55.594+0000] {docker.py:72} INFO - [0m01:41:55  2 of 22 START test accepted_values_stg_clientes_genero__M__F ................... [RUN]
+[2026-09-25T01:41:55.596+0000] {docker.py:72} INFO - [0m01:41:55  4 of 22 START test not_null_dim_clientes_genero ................................ [RUN]
+[2026-09-25T01:41:55.601+0000] {docker.py:72} INFO - [0m01:41:55  3 of 22 START test not_null_dim_clientes_cpf ................................... [RUN]
+[2026-09-25T01:41:55.748+0000] {docker.py:72} INFO - [0m01:41:55  2 of 22 PASS accepted_values_stg_clientes_genero__M__F ......................... [[32mPASS[0m in 0.15s]
+[2026-09-25T01:41:55.756+0000] {docker.py:72} INFO - [0m01:41:55  3 of 22 PASS not_null_dim_clientes_cpf ......................................... [[32mPASS[0m in 0.16s]
+[2026-09-25T01:41:55.762+0000] {docker.py:72} INFO - [0m01:41:55  5 of 22 START test not_null_dim_clientes_id_cliente ............................ [RUN]
+[2026-09-25T01:41:55.763+0000] {docker.py:72} INFO - [0m01:41:55  1 of 22 PASS accepted_values_dim_clientes_genero__M__F ......................... [[32mPASS[0m in 0.16s]
+[2026-09-25T01:41:55.768+0000] {docker.py:72} INFO - [0m01:41:55  4 of 22 PASS not_null_dim_clientes_genero ...................................... [[32mPASS[0m in 0.17s]
+[2026-09-25T01:41:55.779+0000] {docker.py:72} INFO - [0m01:41:55  6 of 22 START test not_null_dim_clientes_id_clinica ............................ [RUN]
+[2026-09-25T01:41:55.782+0000] {docker.py:72} INFO - [0m01:41:55  7 of 22 START test not_null_fato_vendas_clinica ................................ [RUN]
+[2026-09-25T01:41:55.791+0000] {docker.py:72} INFO - [0m01:41:55  8 of 22 START test not_null_fato_vendas_id_venda ............................... [RUN]
+[2026-09-25T01:41:55.860+0000] {docker.py:72} INFO - [0m01:41:55  5 of 22 PASS not_null_dim_clientes_id_cliente .................................. [[32mPASS[0m in 0.10s]
+[2026-09-25T01:41:55.862+0000] {docker.py:72} INFO - [0m01:41:55  9 of 22 START test not_null_fato_vendas_nome_cliente ........................... [RUN]
+[2026-09-25T01:41:55.886+0000] {docker.py:72} INFO - [0m01:41:55  6 of 22 PASS not_null_dim_clientes_id_clinica .................................. [[32mPASS[0m in 0.10s]
+[2026-09-25T01:41:55.898+0000] {docker.py:72} INFO - [0m01:41:55  7 of 22 PASS not_null_fato_vendas_clinica ...................................... [[32mPASS[0m in 0.11s]
+[2026-09-25T01:41:55.900+0000] {docker.py:72} INFO - [0m01:41:55  8 of 22 PASS not_null_fato_vendas_id_venda ..................................... [[32mPASS[0m in 0.10s]
+[2026-09-25T01:41:55.902+0000] {docker.py:72} INFO - [0m01:41:55  10 of 22 START test not_null_fato_vendas_nome_produto .......................... [RUN]
+[2026-09-25T01:41:55.912+0000] {docker.py:72} INFO - [0m01:41:55  11 of 22 START test not_null_stg_clientes_cpf .................................. [RUN]
+[2026-09-25T01:41:55.914+0000] {docker.py:72} INFO - [0m01:41:55  12 of 22 START test not_null_stg_clientes_genero ............................... [RUN]
+[2026-09-25T01:41:55.992+0000] {docker.py:72} INFO - [0m01:41:55  9 of 22 PASS not_null_fato_vendas_nome_cliente ................................. [[32mPASS[0m in 0.12s]
+[2026-09-25T01:41:56.001+0000] {docker.py:72} INFO - [0m01:41:55  13 of 22 START test not_null_stg_clientes_id_cliente ........................... [RUN]
+[2026-09-25T01:41:56.057+0000] {docker.py:72} INFO - [0m01:41:56  10 of 22 PASS not_null_fato_vendas_nome_produto ................................ [[32mPASS[0m in 0.14s]
+[2026-09-25T01:41:56.068+0000] {docker.py:72} INFO - [0m01:41:56  11 of 22 PASS not_null_stg_clientes_cpf ........................................ [[32mPASS[0m in 0.13s]
+[2026-09-25T01:41:56.072+0000] {docker.py:72} INFO - [0m01:41:56  14 of 22 START test not_null_stg_clientes_id_clinica ........................... [RUN]
+[2026-09-25T01:41:56.073+0000] {docker.py:72} INFO - [0m01:41:56  15 of 22 START test not_null_stg_vendas_id_venda ............................... [RUN]
+[2026-09-25T01:41:56.086+0000] {docker.py:72} INFO - [0m01:41:56  12 of 22 PASS not_null_stg_clientes_genero ..................................... [[32mPASS[0m in 0.15s]
+[2026-09-25T01:41:56.112+0000] {docker.py:72} INFO - [0m01:41:56  16 of 22 START test relationships_stg_vendas_id_cliente__id_cliente__ref_stg_clientes_  [RUN]
+[2026-09-25T01:41:56.125+0000] {docker.py:72} INFO - [0m01:41:56  13 of 22 PASS not_null_stg_clientes_id_cliente ................................. [[32mPASS[0m in 0.12s]
+[2026-09-25T01:41:56.154+0000] {docker.py:72} INFO - [0m01:41:56  17 of 22 START test relationships_stg_vendas_id_clinica__id_clinica__ref_stg_clinicas_  [RUN]
+[2026-09-25T01:41:56.189+0000] {docker.py:72} INFO - [0m01:41:56  15 of 22 PASS not_null_stg_vendas_id_venda ..................................... [[32mPASS[0m in 0.12s]
+[2026-09-25T01:41:56.195+0000] {docker.py:72} INFO - [0m01:41:56  18 of 22 START test relationships_stg_vendas_id_produto__id_produto__ref_stg_produtos_  [RUN]
+[2026-09-25T01:41:56.203+0000] {docker.py:72} INFO - [0m01:41:56  14 of 22 PASS not_null_stg_clientes_id_clinica ................................. [[32mPASS[0m in 0.12s]
+[2026-09-25T01:41:56.227+0000] {docker.py:72} INFO - [0m01:41:56  19 of 22 START test unique_dim_clientes_cpf .................................... [RUN]
+[2026-09-25T01:41:56.255+0000] {docker.py:72} INFO - [0m01:41:56  16 of 22 PASS relationships_stg_vendas_id_cliente__id_cliente__ref_stg_clientes_  [[32mPASS[0m in 0.14s]
+[2026-09-25T01:41:56.267+0000] {docker.py:72} INFO - [0m01:41:56  17 of 22 PASS relationships_stg_vendas_id_clinica__id_clinica__ref_stg_clinicas_  [[32mPASS[0m in 0.11s]
+[2026-09-25T01:41:56.271+0000] {docker.py:72} INFO - [0m01:41:56  20 of 22 START test unique_dim_clientes_id_cliente ............................. [RUN]
+[2026-09-25T01:41:56.284+0000] {docker.py:72} INFO - [0m01:41:56  21 of 22 START test unique_stg_clientes_cpf .................................... [RUN]
+[2026-09-25T01:41:56.333+0000] {docker.py:72} INFO - [0m01:41:56  18 of 22 PASS relationships_stg_vendas_id_produto__id_produto__ref_stg_produtos_  [[32mPASS[0m in 0.12s]
+[2026-09-25T01:41:56.343+0000] {docker.py:72} INFO - [0m01:41:56  22 of 22 START test unique_stg_clientes_id_cliente ............................. [RUN]
+[2026-09-25T01:41:56.348+0000] {docker.py:72} INFO - [0m01:41:56  19 of 22 PASS unique_dim_clientes_cpf .......................................... [[32mPASS[0m in 0.12s]
+[2026-09-25T01:41:56.377+0000] {docker.py:72} INFO - [0m01:41:56  20 of 22 PASS unique_dim_clientes_id_cliente ................................... [[32mPASS[0m in 0.10s]
+[2026-09-25T01:41:56.379+0000] {docker.py:72} INFO - [0m01:41:56  21 of 22 PASS unique_stg_clientes_cpf .......................................... [[32mPASS[0m in 0.08s]
+[2026-09-25T01:41:56.390+0000] {docker.py:72} INFO - [0m01:41:56  22 of 22 PASS unique_stg_clientes_id_cliente ................................... [[32mPASS[0m in 0.05s]
+[2026-09-25T01:41:56.418+0000] {docker.py:72} INFO - [0m01:41:56
+[2026-09-25T01:41:56.419+0000] {docker.py:72} INFO - [0m01:41:56  Finished running 22 data tests in 0 hours 0 minutes and 0.99 seconds (0.99s).
+[2026-09-25T01:41:56.513+0000] {docker.py:72} INFO - [0m01:41:56
+[2026-09-25T01:41:56.515+0000] {docker.py:72} INFO - [0m01:41:56  [32mCompleted successfully[0m
+[2026-09-25T01:41:56.516+0000] {docker.py:72} INFO - [0m01:41:56
+[2026-09-25T01:41:56.520+0000] {docker.py:72} INFO - [0m01:41:56  Done. PASS=22 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=22
+[2026-09-25T01:41:56.521+0000] {docker.py:72} INFO - [0m01:41:56  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+[2026-09-25T01:41:56.522+0000] {docker.py:72} INFO - Summary of encountered deprecations:
+[2026-09-25T01:41:56.523+0000] {docker.py:72} INFO - - MissingArgumentsPropertyInGenericTestDeprecation: 2 occurrences
+[2026-09-25T01:41:56.524+0000] {docker.py:72} INFO - To see all deprecation instances instead of just the first occurrence of each,
+[2026-09-25T01:41:56.525+0000] {docker.py:72} INFO - run command again with the `--show-all-deprecations` flag. You may also need to
+[2026-09-25T01:41:56.526+0000] {docker.py:72} INFO - run with `--no-partial-parse` as some deprecations are only encountered during
+[2026-09-25T01:41:56.527+0000] {docker.py:72} INFO - parsing.
+[2026-09-25T01:41:57.977+0000] {taskinstance.py:349} INFO - ::group::Post task execution logs
+[2026-09-25T01:41:57.979+0000] {taskinstance.py:361} INFO - Marking task as SUCCESS. dag_id=ETL_Projeto, task_id=dbt_test, run_id=manual__2026-09-25T01:41:28.920714+00:00, execution_date=20260925T014128, start_date=20260925T014147, end_date=20260925T014157
+[2026-09-25T01:41:58.088+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-25T01:41:58.115+0000] {taskinstance.py:3924} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-09-25T01:41:58.120+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

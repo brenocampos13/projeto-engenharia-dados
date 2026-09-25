@@ -1,4 +1,4 @@
-from config import get_connect_dw
+from etl.config import get_connect_dw
 
 def extract_origens():
 

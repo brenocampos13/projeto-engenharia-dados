@@ -1,0 +1,58 @@
+[2026-09-25T01:48:14.377+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-25T01:48:14.419+0000] {taskinstance.py:2631} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: ETL_Projeto.dbt_transform manual__2026-09-25T01:48:09.438384+00:00 [queued]>
+[2026-09-25T01:48:14.434+0000] {taskinstance.py:2631} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: ETL_Projeto.dbt_transform manual__2026-09-25T01:48:09.438384+00:00 [queued]>
+[2026-09-25T01:48:14.435+0000] {taskinstance.py:2884} INFO - Starting attempt 1 of 1
+[2026-09-25T01:48:14.453+0000] {taskinstance.py:2907} INFO - Executing <Task(DockerOperator): dbt_transform> on 2026-09-25 01:48:09.438384+00:00
+[2026-09-25T01:48:14.465+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=3914) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-09-25T01:48:14.465+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'ETL_Projeto', 'dbt_transform', 'manual__2026-09-25T01:48:09.438384+00:00', '--job-id', '51', '--raw', '--subdir', 'DAGS_FOLDER/teste_python.py', '--cfg-path', '/tmp/tmp3d8ime3j']
+[2026-09-25T01:48:14.469+0000] {standard_task_runner.py:105} INFO - Job 51: Subtask dbt_transform
+[2026-09-25T01:48:14.469+0000] {standard_task_runner.py:72} INFO - Started process 3915 to run task
+[2026-09-25T01:48:14.554+0000] {task_command.py:467} INFO - Running <TaskInstance: ETL_Projeto.dbt_transform manual__2026-09-25T01:48:09.438384+00:00 [running]> on host b6255e59cd80
+[2026-09-25T01:48:14.702+0000] {taskinstance.py:3157} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='ETL_Projeto' AIRFLOW_CTX_TASK_ID='dbt_transform' AIRFLOW_CTX_EXECUTION_DATE='2026-09-25T01:48:09.438384+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-25T01:48:09.438384+00:00'
+[2026-09-25T01:48:14.703+0000] {taskinstance.py:740} INFO - ::endgroup::
+[2026-09-25T01:48:14.819+0000] {docker.py:352} INFO - Starting docker container from image dbt_runner:latest
+[2026-09-25T01:48:14.833+0000] {docker.py:360} WARNING - Using remote engine or docker-in-docker and mounting temporary volume from host is not supported. Falling back to `mount_tmp_dir=False` mode. You can set `mount_tmp_dir` parameter to False to disable mounting and remove the warning
+[2026-09-25T01:48:18.157+0000] {docker.py:72} INFO - [0m01:48:18  Running with dbt=1.12.5
+[2026-09-25T01:48:18.565+0000] {docker.py:72} INFO - [0m01:48:18  Registered adapter: postgres=1.11.0
+[2026-09-25T01:48:18.985+0000] {docker.py:72} INFO - [0m01:48:18  Unable to do partial parsing because profile has changed
+[2026-09-25T01:48:21.189+0000] {docker.py:72} INFO - [0m01:48:21  [[33mWARNING[0m][MissingArgumentsPropertyInGenericTestDeprecation]: Deprecated
+[2026-09-25T01:48:21.191+0000] {docker.py:72} INFO - functionality
+[2026-09-25T01:48:21.192+0000] {docker.py:72} INFO - Found top-level arguments to test `accepted_values` defined on 'stg_clientes' in
+[2026-09-25T01:48:21.193+0000] {docker.py:72} INFO - package 'projeto_dbt' (models/staging/stg_clientes.yml). Arguments to generic
+[2026-09-25T01:48:21.194+0000] {docker.py:72} INFO - tests should be nested under the `arguments` property.
+[2026-09-25T01:48:21.884+0000] {docker.py:72} INFO - [0m01:48:21  Found 7 models, 22 data tests, 5 sources, 477 macros
+[2026-09-25T01:48:21.893+0000] {docker.py:72} INFO - [0m01:48:21
+[2026-09-25T01:48:21.894+0000] {docker.py:72} INFO - [0m01:48:21  Concurrency: 4 threads (target='dev')
+[2026-09-25T01:48:21.895+0000] {docker.py:72} INFO - [0m01:48:21
+[2026-09-25T01:48:22.127+0000] {docker.py:72} INFO - [0m01:48:22  4 of 7 START sql view model dbt_staging.stg_produtos ........................... [RUN]
+[2026-09-25T01:48:22.132+0000] {docker.py:72} INFO - [0m01:48:22  3 of 7 START sql view model dbt_staging.stg_origens ............................ [RUN]
+[2026-09-25T01:48:22.134+0000] {docker.py:72} INFO - [0m01:48:22  1 of 7 START sql view model dbt_staging.stg_clientes ........................... [RUN]
+[2026-09-25T01:48:22.135+0000] {docker.py:72} INFO - [0m01:48:22  2 of 7 START sql view model dbt_staging.stg_clinicas ........................... [RUN]
+[2026-09-25T01:48:22.501+0000] {docker.py:72} INFO - [0m01:48:22  3 of 7 OK created sql view model dbt_staging.stg_origens ....................... [[32mCREATE VIEW[0m in 0.36s]
+[2026-09-25T01:48:22.504+0000] {docker.py:72} INFO - [0m01:48:22  1 of 7 OK created sql view model dbt_staging.stg_clientes ...................... [[32mCREATE VIEW[0m in 0.36s]
+[2026-09-25T01:48:22.508+0000] {docker.py:72} INFO - [0m01:48:22  2 of 7 OK created sql view model dbt_staging.stg_clinicas ...................... [[32mCREATE VIEW[0m in 0.36s]
+[2026-09-25T01:48:22.513+0000] {docker.py:72} INFO - [0m01:48:22  4 of 7 OK created sql view model dbt_staging.stg_produtos ...................... [[32mCREATE VIEW[0m in 0.36s]
+[2026-09-25T01:48:22.518+0000] {docker.py:72} INFO - [0m01:48:22  5 of 7 START sql view model dbt_staging.stg_vendas ............................. [RUN]
+[2026-09-25T01:48:22.519+0000] {docker.py:72} INFO - [0m01:48:22  6 of 7 START sql view model dbt_analytics.dim_clientes ......................... [RUN]
+[2026-09-25T01:48:22.592+0000] {docker.py:72} INFO - [0m01:48:22  5 of 7 OK created sql view model dbt_staging.stg_vendas ........................ [[32mCREATE VIEW[0m in 0.07s]
+[2026-09-25T01:48:22.593+0000] {docker.py:72} INFO - [0m01:48:22  6 of 7 OK created sql view model dbt_analytics.dim_clientes .................... [[32mCREATE VIEW[0m in 0.07s]
+[2026-09-25T01:48:22.600+0000] {docker.py:72} INFO - [0m01:48:22  7 of 7 START sql table model dbt_analytics.fato_vendas ......................... [RUN]
+[2026-09-25T01:48:22.688+0000] {docker.py:72} INFO - [0m01:48:22  7 of 7 OK created sql table model dbt_analytics.fato_vendas .................... [[32mSELECT 5[0m in 0.09s]
+[2026-09-25T01:48:22.727+0000] {docker.py:72} INFO - [0m01:48:22
+[2026-09-25T01:48:22.739+0000] {docker.py:72} INFO - [0m01:48:22  Finished running 1 table model, 6 view models in 0 hours 0 minutes and 0.83 seconds (0.83s).
+[2026-09-25T01:48:22.869+0000] {docker.py:72} INFO - [0m01:48:22
+[2026-09-25T01:48:22.871+0000] {docker.py:72} INFO - [0m01:48:22  [32mCompleted successfully[0m
+[2026-09-25T01:48:22.874+0000] {docker.py:72} INFO - [0m01:48:22
+[2026-09-25T01:48:22.876+0000] {docker.py:72} INFO - [0m01:48:22  Done. PASS=7 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=7
+[2026-09-25T01:48:22.878+0000] {docker.py:72} INFO - [0m01:48:22  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+[2026-09-25T01:48:22.879+0000] {docker.py:72} INFO - Summary of encountered deprecations:
+[2026-09-25T01:48:22.882+0000] {docker.py:72} INFO - - MissingArgumentsPropertyInGenericTestDeprecation: 2 occurrences
+[2026-09-25T01:48:22.884+0000] {docker.py:72} INFO - To see all deprecation instances instead of just the first occurrence of each,
+[2026-09-25T01:48:22.887+0000] {docker.py:72} INFO - run command again with the `--show-all-deprecations` flag. You may also need to
+[2026-09-25T01:48:22.889+0000] {docker.py:72} INFO - run with `--no-partial-parse` as some deprecations are only encountered during
+[2026-09-25T01:48:22.890+0000] {docker.py:72} INFO - parsing.
+[2026-09-25T01:48:24.713+0000] {taskinstance.py:349} INFO - ::group::Post task execution logs
+[2026-09-25T01:48:24.723+0000] {taskinstance.py:361} INFO - Marking task as SUCCESS. dag_id=ETL_Projeto, task_id=dbt_transform, run_id=manual__2026-09-25T01:48:09.438384+00:00, execution_date=20260925T014809, start_date=20260925T014814, end_date=20260925T014824
+[2026-09-25T01:48:24.859+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-25T01:48:24.905+0000] {taskinstance.py:3924} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-25T01:48:24.909+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

@@ -251,3 +251,31 @@ https://docs.getdbt.com/docs/configure-your-profile
 [0m09:16:31.500959 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000228B858A190>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000228B8682210>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000228B8493240>]}
 [0m09:16:31.501616 [debug] [MainThread]: Flushing usage events
 [0m09:16:33.315538 [debug] [MainThread]: An error was encountered while trying to flush usage events
+==================== 2026-09-25T01:50:04.482125Z | 01a0d641-6298-7211-9937-fcb1d6d724e3 ====================
+01:50:04.492751 [warn ]: [DocsGenerateWarning (dbt1705)]: `dbt docs generate` is not supported. Use `dbt compile --write-catalog` to write catalog.json. To host docs locally, use the dbt Core index.html with catalog.json and manifest.json in the same directory: https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/task/docs/index.html
+01:50:05.552101 [info ]: 
+==================== Execution Summary =====================
+Finished 'docs' with 1 warning [1.1s]
+==================== 2026-09-25T01:50:09.701211Z | 01a0d641-7721-79f1-96c1-26c7685ff5d7 ====================
+01:50:09.701518 [warn ]: [DocsGenerateWarning (dbt1705)]: `dbt docs generate` is not supported. Use `dbt compile --write-catalog` to write catalog.json. To host docs locally, use the dbt Core index.html with catalog.json and manifest.json in the same directory: https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/task/docs/index.html
+01:50:10.186914 [info ]: 
+==================== Execution Summary =====================
+Finished 'docs' with 1 warning [485ms]
+==================== 2026-09-25T01:50:15.349797Z | 01a0d641-8d31-7780-9c7c-911ff2e230c1 ====================
+01:50:15.352587 [error]: [Generic (dbt1000)]: dbt docs serve: no data to serve
+
+Index directory not found: ./target/index
+Run `dbt --write-index <run|build|compile>` to generate parquet artifacts,
+or pass `--target-path <DIR>` pointing at a directory whose `index/` subdirectory contains them.
+01:50:15.811835 [info ]: 
+==================== Execution Summary =====================
+Finished 'docs' with 1 error [462ms]
+==================== 2026-09-25T01:50:24.239419Z | 01a0d641-afe9-7ff1-85b3-e816cd43fd5a ====================
+01:50:24.240039 [error]: [Generic (dbt1000)]: dbt docs serve: no data to serve
+
+Index directory not found: ./target/index
+Run `dbt --write-index <run|build|compile>` to generate parquet artifacts,
+or pass `--target-path <DIR>` pointing at a directory whose `index/` subdirectory contains them.
+01:50:24.695434 [info ]: 
+==================== Execution Summary =====================
+Finished 'docs' with 1 error [456ms]
